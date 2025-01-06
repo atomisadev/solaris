@@ -57,7 +57,7 @@ const teamMembers = [
   {
     name: "Mohit Srinivasan",
     role: "Lead Organizer",
-    avatar: "/avatars/Mohit Srinivasan.webp",
+    avatar: "/avatars/Mohit Srinivasan.png",
   },
   {
     name: "Malav Patel",
@@ -124,27 +124,68 @@ function FadeInWhenVisible({
   delay = 0,
   className = "",
   variant = "dark",
+  direction = "left",
 }: {
   children: React.ReactNode;
   delay?: number;
   className?: string;
   variant?: "dark" | "light";
+  direction?: "left" | "right" | "up";
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  const xDirection =
+    direction === "left" ? -50 : direction === "right" ? 50 : 0;
+  const yDirection = direction === "up" ? 50 : 0;
+
   return (
-    <motion.div
-      ref={ref}
+    <div
       className={`w-screen ${className} ${variant === "light" ? "bg-white" : "bg-black"}`}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.8, delay }}
     >
-      <div>{children}</div>
-    </motion.div>
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, x: xDirection, y: yDirection }}
+        animate={
+          isInView
+            ? { opacity: 1, x: 0, y: 0 }
+            : { opacity: 0, x: xDirection, y: yDirection }
+        }
+        transition={{ duration: 0.8, delay }}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }
+
+const StaggerContainer = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ staggerChildren: 0.1 }}
+  >
+    {children}
+  </motion.div>
+);
+
+const StaggerItem = ({
+  children,
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+}) => (
+  <motion.div
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay }}
+  >
+    {children}
+  </motion.div>
+);
 export default function Home() {
   const [showEnvelope, setShowEnvelope] = useState(false);
   const [envelopeState, setEnvelopeState] = useState<"closed" | "open">(
@@ -291,7 +332,7 @@ export default function Home() {
 
         {/* About Section */}
         <FadeInWhenVisible delay={0.2} variant="light">
-          <div className="flex flex-col mt-20 bg-white w-full py-20">
+          <div className="flex flex-col bg-white w-full py-20">
             <div className="flex flex-col items-center max-w-6xl mx-auto px-4 sm:px-8">
               <h2
                 className={`${beVietnamPro.className} text-4xl sm:text-5xl font-bold text-center`}
@@ -316,15 +357,15 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-1 mt-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
               {/* Team Grid - Left Side */}
-              <div className="grid grid-cols-3 gap-10 px-4 sm:px-8 md:px-12 lg:px-20 w-full">
+              <div className="grid grid-cols-3 gap-10 px-4 sm:px-8 md:px-12 lg:px-20 w-full mt-12">
                 {teamMembers.map((member, index) => (
                   <div
                     key={index}
                     className="flex flex-col items-center text-center"
                   >
-                    <div className="w-24 h-24 sm:w-40 sm:h-40 mb-4 overflow-hidden rounded-full">
+                    <div className="w-32 h-32 sm:w-48 sm:h-48 mb-4 overflow-hidden rounded-full">
                       <Image
                         src={member.avatar}
                         alt={member.name}
@@ -334,11 +375,11 @@ export default function Home() {
                       />
                     </div>
                     <h3
-                      className={`${beVietnamPro.className} font-bold text-black text-sm sm:text-base mb-1`}
+                      className={`${beVietnamPro.className} font-bold text-black text-sm sm:text-base mb-2`}
                     >
                       {member.name}
                     </h3>
-                    <p className="text-sm text-black/60">{member.role}</p>
+                    <p className="text-sm text-black/60 mt-1">{member.role}</p>
                   </div>
                 ))}
               </div>
@@ -690,7 +731,7 @@ export default function Home() {
                   handleEnvelopeClick();
                 }}
               >
-                <div className="relative w-[400px] h-[400px] md:w-[700px] md:h-[700px]">
+                <div className="relative w-[500px] h-[500px] md:w-[750px] md:h-[750px] mx-auto">
                   {envelopeState === "closed" && (
                     <motion.img
                       src="/envelope-closed.svg"
@@ -711,25 +752,29 @@ export default function Home() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                       />
-                      <div className="absolute bottom-[-60px] left-1/2 transform -translate-x-1/2 flex gap-4">
-                        <button
-                          className={`${beVietnamPro.className} px-6 py-2 bg-white font-medium text-black/90 rounded-lg hover:bg-white/80 transition-colors`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setShowEmailDialog(true);
-                          }}
-                        >
-                          Interested
-                        </button>
-                        <button
-                          className={`${beVietnamPro.className} px-6 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setShowEnvelope(false);
-                          }}
-                        >
-                          Not Interested
-                        </button>
+                      <div className="fixed bottom-0 left-0 right-0 sm:absolute sm:bottom-[50px] sm:left-1/2 sm:-translate-x-1/2 w-full p-4 sm:p-0 bg-black/50 sm:bg-transparent">
+                        <div className="flex justify-center items-center w-full">
+                          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+                            <button
+                              className={`${beVietnamPro.className} w-full sm:w-auto px-6 py-2 bg-white font-medium text-black/90 rounded-lg hover:bg-white/80 transition-colors`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setShowEmailDialog(true);
+                              }}
+                            >
+                              Interested
+                            </button>
+                            <button
+                              className={`${beVietnamPro.className} w-full sm:w-auto px-6 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setShowEnvelope(false);
+                              }}
+                            >
+                              Not Interested
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </>
                   )}
