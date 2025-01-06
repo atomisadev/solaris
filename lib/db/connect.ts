@@ -6,7 +6,7 @@ interface MongooseCache {
 }
 
 declare global {
-  var mongoose: MongooseCache;
+  let mongoose: MongooseCache;
 }
 
 const MONGODB_URI = process.env.MONGODB_URI;
