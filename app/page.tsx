@@ -388,9 +388,9 @@ export default function Home() {
             <motion.div
               className="relative p-8 rounded cursor-pointer"
               variants={envelopeVariants}
-              animate={envelopeState}
+              // animate={envelopeState}
               initial={{ opacity: 0, scale: 0.8 }}
-              // animate={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.3 }}
               onClick={(e) => {
