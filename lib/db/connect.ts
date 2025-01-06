@@ -5,8 +5,9 @@ interface MongooseCache {
   promise: Promise<typeof mongoose> | null;
 }
 
+// Declare global namespace to extend globalThis
 declare global {
-  let mongoose: MongooseCache;
+  var mongoose: MongooseCache | undefined; // Use var instead of let
 }
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -17,10 +18,13 @@ if (!MONGODB_URI) {
   );
 }
 
-let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+let cached: MongooseCache = (global as any).mongoose || {
+  conn: null,
+  promise: null,
+};
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = (global as any).mongoose = { conn: null, promise: null };
 }
 
 export async function connectDB() {
