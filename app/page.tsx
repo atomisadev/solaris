@@ -207,7 +207,12 @@ export default function Home() {
         body: JSON.stringify({ email }),
       });
 
-      if (!res.ok) throw new Error("Submission failed");
+      const data = await res.json();
+
+      if (!res.ok) {
+        setEmailError(data.error || "Failed to submit email");
+        return;
+      }
 
       setEmail("");
       setShowEmailDialog(false);
@@ -249,12 +254,12 @@ export default function Home() {
                 priority
               />
 
-              <button className="flex items-center gap-2 bg-white text-black px-5 py-2 rounded-full hover:bg-white/90 transition-colors">
+              {/* <button className="flex items-center gap-2 bg-white text-black px-5 py-2 rounded-full hover:bg-white/90 transition-colors">
                 <span className={`${beVietnamPro.className} font-medium`}>
                   Register
                 </span>
                 <ArrowRight size={16} />
-              </button>
+              </button> */}
             </div>
 
             <main className="flex flex-col mt-auto z-10 w-full">

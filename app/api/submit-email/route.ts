@@ -18,15 +18,20 @@ export async function POST(req: Request) {
 
     await connectDB();
 
+    const existingEmail = await Email.findOne({ email });
+    if (existingEmail) {
+      return NextResponse.json({
+        error: "This email has already been recruited",
+        status: 409,
+      });
+    }
+
     const ipAddress = req.headers.get("x-forwarded-for") || "unknown";
 
     await Email.create({
       email,
       ipAddress,
     });
-
-    // Render the React Email component to HTML
-    // const html = render(RecruitmentEmail({ recipientEmail: email }));
 
     await resend.emails.send({
       from: "Solaris Mission Control <onboarding@hacksolaris.com>",

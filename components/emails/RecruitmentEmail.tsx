@@ -19,7 +19,18 @@ interface RecruitmentEmailProps {
 export function RecruitmentEmail({ recipientEmail }: RecruitmentEmailProps) {
   return (
     <Html>
-      <Head />
+      <Head>
+        <style>{`
+          @media (prefers-color-scheme: dark) {
+            .light-mode-img { display: none !important; }
+            .dark-mode-img { display: block !important; }
+          }
+          @media (prefers-color-scheme: light) {
+            .light-mode-img { display: block !important; }
+            .dark-mode-img { display: none !important; }
+          }
+        `}</style>
+      </Head>
       <Preview>Your Solaris Recruitment Letter</Preview>
       <Body
         style={{
@@ -30,15 +41,51 @@ export function RecruitmentEmail({ recipientEmail }: RecruitmentEmailProps) {
           padding: 0,
         }}
       >
-        <Container style={{ padding: "40px", maxWidth: "600px" }}>
-          <Img
-            src="https://hacksolaris.com/email/logo.png"
-            alt="Solaris Logo"
-            width={200}
-            height="auto"
-          />
+        <Container
+          style={{
+            padding: "40px",
+            maxWidth: "600px",
+            backgroundColor: "#ffffff",
+            borderRadius: "8px",
+          }}
+        >
+          <Section
+            style={{
+              backgroundColor: "#ffffff",
+              padding: "20px",
+              marginBottom: "20px",
+            }}
+          >
+            <Img
+              src="https://hacksolaris.com/email/logo-light.png"
+              alt="Solaris Logo"
+              width={200}
+              height="auto"
+              className="light-mode-img"
+              style={{
+                display: "block",
+                margin: "0 auto",
+              }}
+            />
+            <Img
+              src="https://hacksolaris.com/email/logo-dark.png"
+              alt="Solaris Logo"
+              width={200}
+              height="auto"
+              className="dark-mode-img"
+              style={{
+                display: "none",
+                margin: "0 auto",
+              }}
+            />
+          </Section>
 
-          <Section style={{ padding: "20px 0" }}>
+          <Section
+            style={{
+              backgroundColor: "#ffffff", // Added white background
+              padding: "20px",
+            }}
+          >
             <Text>Dear Earth,</Text>
 
             <Text>
@@ -79,12 +126,29 @@ export function RecruitmentEmail({ recipientEmail }: RecruitmentEmailProps) {
                 Mohit Srinivasan
               </Text>
               <Img
-                src="https://hacksolaris.com/email/signature.png"
+                src="https://hacksolaris.com/email/signature-light.png"
                 alt="Signature"
                 width={200}
                 height="auto"
+                className="light-mode-img"
+                style={{
+                  display: "block",
+                }}
+              />
+              <Img
+                src="https://hacksolaris.com/email/signature-dark.png"
+                alt="Signature"
+                width={200}
+                height="auto"
+                className="dark-mode-img"
+                style={{
+                  display: "none",
+                }}
               />
               <Text style={{ margin: 0, color: "#666" }}>Mission Director</Text>
+              <Text style={{ margin: 0, color: "#666" }}>
+                mohit@hacksolaris.com
+              </Text>
               <Text style={{ margin: 0, color: "#666" }}>
                 Solaris Mission Control
               </Text>
