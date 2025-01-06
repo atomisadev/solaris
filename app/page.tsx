@@ -5,6 +5,8 @@ import { Be_Vietnam_Pro } from "next/font/google";
 import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { Toast } from "@/components/ui/toast";
 import {
   Dialog,
   DialogContent,
@@ -73,7 +75,7 @@ const teamMembers = [
   {
     name: "Arjun Agarwala",
     role: "Finance Lead",
-    avatar: "/avatars/Mohit Srinivasan.webp",
+    avatar: "/avatars/Arjun Agarwala.png",
   },
 ];
 
@@ -120,10 +122,36 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowEnvelope(true), 600);
-    return () => clearTimeout(timer);
+    const hasSeenEnvelope = localStorage.getItem("hasSeenEnvelope");
+
+    if (!hasSeenEnvelope) {
+      // Show envelope after 2 minutes for first-time visitors
+      const timer = setTimeout(() => {
+        setShowEnvelope(true);
+        localStorage.setItem("hasSeenEnvelope", "true");
+      }, 120000); // 2 minutes
+      return () => clearTimeout(timer);
+    } else {
+      // Show toast for returning visitors
+      toast({
+        title: "Welcome back!",
+        description: "Would you like to see the recruitment letter again?",
+        action: (
+          <div className="flex gap-2">
+            <Button variant="default" onClick={() => setShowEnvelope(true)}>
+              Yes, show it
+            </Button>
+            <Button variant="secondary" onClick={() => toast.dismiss()}>
+              No thanks
+            </Button>
+          </div>
+        ),
+        duration: 10000, // 10 seconds
+      });
+    }
   }, []);
 
   const handleEnvelopeClick = async () => {
