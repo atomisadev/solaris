@@ -17,6 +17,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
+import { ToastAction } from "@radix-ui/react-toast";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 type EnvelopeState = "closed" | "open";
 
@@ -140,14 +147,12 @@ export default function Home() {
         title: "Welcome back!",
         description: "Would you like to see the recruitment letter again?",
         action: (
-          <div className="flex gap-2">
-            <Button variant="default" onClick={() => setShowEnvelope(true)}>
-              Yes, show it
-            </Button>
-            <Button variant="secondary" onClick={() => toast.dismiss()}>
-              No thanks
-            </Button>
-          </div>
+          <ToastAction
+            altText="Show Recruitment letter"
+            onClick={() => setShowEnvelope(true)}
+          >
+            Show
+          </ToastAction>
         ),
         duration: 10000, // 10 seconds
       });
@@ -403,6 +408,142 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="bg-white py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8">
+          <div className="flex flex-col items-center">
+            <h2
+              className={`${beVietnamPro.className} text-4xl sm:text-5xl font-bold text-center`}
+              style={{
+                letterSpacing: "-0.06em",
+                lineHeight: "1.2",
+                color: "rgba(0, 0, 0, 0.9)",
+              }}
+            >
+              Frequently Asked Questions
+            </h2>
+            <p
+              className={`${beVietnamPro.className} text-xl sm:text-2xl max-w-xl text-center mt-6`}
+              style={{
+                letterSpacing: "-0.05em",
+                lineHeight: "1.116",
+                color: "rgba(0, 0, 0, 0.6)",
+              }}
+            >
+              Common questions about hackathons and what to expect.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 w-full">
+              <Accordion
+                type="single"
+                collapsible
+                className="w-full text-black"
+              >
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-black hover:text-black/70">
+                    What is a hackathon?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-black/80">
+                    A hackathon is an event where students come together to turn
+                    their ideas into reality through coding, designing, and
+                    building projects. Think of it as an invention marathon
+                    where you can learn new skills, meet amazing people, and
+                    create something awesome - all in 24 hours!
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger className="text-black hover:text-black/70">
+                    Do I need to know how to code?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-black/80">
+                    Not at all! Hackathons are perfect for beginners. We'll have
+                    workshops, mentors, and resources to help you learn. Many
+                    participants come with zero coding experience and leave
+                    having built their first project.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger className="text-black hover:text-black/70">
+                    What should I bring?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-black/80">
+                    Bring your laptop, charger, and any other devices you might
+                    need. We'll provide food, drinks, snacks, and a comfortable
+                    space to work. Don't forget a sleeping bag or blanket if you
+                    plan to rest!
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-7">
+                  <AccordionTrigger className="text-black hover:text-black/70">
+                    Where will the hackathon be held?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-black/80">
+                    We're currently in talks with several potential venues in
+                    the New Jersey area and potentially the Greater New York
+                    Area. We're looking for a spacious, accessible location that
+                    can comfortably accommodate all our hackers with the
+                    necessary amenities and technical infrastructure. We'll
+                    announce the final venue as soon as we secure the perfect
+                    spot for an amazing hackathon experience!
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
+              <Accordion
+                type="single"
+                collapsible
+                className="w-full text-black"
+              >
+                <AccordionItem value="item-4">
+                  <AccordionTrigger className="text-black hover:text-black/70">
+                    What can I build?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-black/80">
+                    Anything! Websites, apps, games, hardware projects - the
+                    sky's the limit. We'll have themed prize tracks and sponsors
+                    who can help guide your project, but you're free to build
+                    whatever interests you most.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                  <AccordionTrigger className="text-black hover:text-black/70">
+                    How much does it cost?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-black/80">
+                    Nothing! The event is completely free for all participants.
+                    We provide meals, snacks, swag, and everything you need to
+                    have an amazing experience, thanks to our generous sponsors.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-6">
+                  <AccordionTrigger className="text-black hover:text-black/70">
+                    Do I need a team?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-black/80">
+                    Nope! You can come solo and find a team at the event, or
+                    work alone if you prefer. We'll have team formation
+                    activities at the start to help you find people with
+                    complementary skills and interests.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-8">
+                  <AccordionTrigger className="text-black hover:text-black/70">
+                    When is the hackathon?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-black/80">
+                    Solaris is planned for Spring 2024! We're currently
+                    finalizing the exact date, coordinating with academic
+                    calendars and other major hackathons to ensure maximum
+                    participation. Stay tuned to our social media channels for
+                    the official date announcement!
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <AnimatePresence>
         {showEnvelope && (
           <motion.div
@@ -497,6 +638,79 @@ export default function Home() {
           </form>
         </DialogContent>
       </Dialog>
+
+      {/* Footer Section */}
+      <div className="bg-black/[.68] text-white py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8">
+          <div className="flex justify-between items-start">
+            {/* Left side - All text content */}
+            <div className="flex flex-col gap-2">
+              <p className={`${beVietnamPro.className} text-sm text-white/80`}>
+                Built and designed by Mohit Srinivasan
+              </p>
+              <div>
+                <p
+                  className={`${beVietnamPro.className} text-sm text-white/80 mb-2`}
+                >
+                  Solaris is a 501(c)(3) nonprofit organization fiscally
+                  sponsored by The Hack Foundation
+                </p>
+                <p
+                  className={`${beVietnamPro.className} text-xs text-white/60`}
+                >
+                  EIN: 81-2908499
+                </p>
+              </div>
+            </div>
+
+            {/* Right side - Social Links */}
+            <div className="flex items-center gap-4">
+              <a
+                href="https://instagram.com/hacksolaris"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/80 hover:text-white transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
+              </a>
+              <a
+                href="https://github.com/hacksolaris"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/80 hover:text-white transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
