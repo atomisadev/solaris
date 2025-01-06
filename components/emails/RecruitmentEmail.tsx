@@ -32,7 +32,7 @@ export function RecruitmentEmail({ recipientEmail }: RecruitmentEmailProps) {
       >
         <Container style={{ padding: "40px", maxWidth: "600px" }}>
           <Img
-            src="/email/logo.png"
+            src="https://hacksolaris.com/email/logo.png"
             alt="Solaris Logo"
             width={200}
             height="auto"
@@ -79,7 +79,7 @@ export function RecruitmentEmail({ recipientEmail }: RecruitmentEmailProps) {
                 Mohit Srinivasan
               </Text>
               <Img
-                src="/email/signature.png"
+                src="https://hacksolaris.com/email/signature.png"
                 alt="Signature"
                 width={200}
                 height="auto"
